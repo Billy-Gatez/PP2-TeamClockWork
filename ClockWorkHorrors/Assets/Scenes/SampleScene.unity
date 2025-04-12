@@ -3709,7 +3709,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   controller: {fileID: 1838789524}
-  HP: 50
+  HP: 100
   speed: 5
   sprintMod: 3
   jumpSpeed: 12
@@ -3820,6 +3820,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1626410647}
     m_Modifications:
+    - target: {fileID: 1661430672302905477, guid: d08a64bee2f242643bcf5654323f4e51, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5631811960995222076, guid: d08a64bee2f242643bcf5654323f4e51, type: 3}
       propertyPath: m_LocalPosition.x
       value: -692.72736
@@ -3980,6 +3984,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1626410647}
     m_Modifications:
+    - target: {fileID: 1661430672302905477, guid: d08a64bee2f242643bcf5654323f4e51, type: 3}
+      propertyPath: damageAmount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5631811960995222076, guid: d08a64bee2f242643bcf5654323f4e51, type: 3}
       propertyPath: m_LocalPosition.x
       value: -687.8174
