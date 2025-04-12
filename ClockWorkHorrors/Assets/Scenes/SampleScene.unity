@@ -4810,7 +4810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 5653032201767142669}
-  HP: 100
+  HP: 90
   agent: {fileID: 5653032201780773740}
   shootPos: {fileID: 1542087746}
   bullet: {fileID: 9049034700447831962, guid: 38e4379b089c00a49a4412151b438ae0, type: 3}
