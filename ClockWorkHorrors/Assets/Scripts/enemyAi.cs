@@ -15,9 +15,13 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+
     [SerializeField] GameObject meleeHitbox;
     [SerializeField] float meleeCooldown;
     [SerializeField] float meleeRange;
+
+    bool playerInRange;
+
 
     bool playerInRange;
 
@@ -34,6 +38,7 @@ public class enemyAI : MonoBehaviour, IDamage
     }
 
     void Update()
+       
     {
         if (playerInRange)
         {
@@ -80,6 +85,7 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+
         StartCoroutine(flashred());
 
         agent.SetDestination(gamemanager.instance.player.transform.position);
