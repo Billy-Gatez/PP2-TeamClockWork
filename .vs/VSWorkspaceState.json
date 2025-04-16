@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ClockWorkHorrors",
+    "\\ClockWorkHorrors\\Assets",
+    "\\ClockWorkHorrors\\Assets\\Scripts"
   ],
-  "SelectedNode": "\\D:\\CLOCKWORK",
+  "SelectedNode": "\\ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs",
   "PreviewInSolutionExplorer": false
 }
