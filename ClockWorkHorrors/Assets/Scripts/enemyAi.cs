@@ -14,11 +14,15 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+
     [SerializeField] GameObject meleeHitbox;
     [SerializeField] float meleeCooldown;
     [SerializeField] float meleeRange;
 
     float meleeTimer;
+
+
+    bool playerInRange;
 
     float shootTimer;
 
@@ -35,7 +39,9 @@ public class enemyAI : MonoBehaviour, IDamage
 
     // Update is called once per frame
     void Update()
+       
     {
+        if (playerInRange) 
         playerDir = (gamemanager.instance.player.transform.position - transform.position);
 
         agent.SetDestination(gamemanager.instance.player.transform.position);
@@ -61,10 +67,30 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+
     public void takeDamage(int amount)
     {
         HP -= amount;
+
         StartCoroutine(flashred());
+
+        StartCoroutine(flashRed());
+        agent.SetDestination(gamemanager.instance.player.transform.position);
 
         if (HP <= 0)
         {
@@ -99,5 +125,5 @@ public class enemyAI : MonoBehaviour, IDamage
     }
 }
 
-//TEST
+
 
