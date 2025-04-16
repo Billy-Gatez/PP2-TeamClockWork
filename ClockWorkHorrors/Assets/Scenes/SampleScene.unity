@@ -453,6 +453,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a0f2a986177acb44bbf60933b056409a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1187784710210196810, guid: a0f2a986177acb44bbf60933b056409a, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -796,9 +800,12 @@ MonoBehaviour:
   menuPause: {fileID: 1207548736}
   menuWin: {fileID: 323655830}
   menuLose: {fileID: 1122853062}
+  gameGoalCountText: {fileID: 0}
   player: {fileID: 0}
   playerScript: {fileID: 0}
   isPaused: 0
+  playerHPBar: {fileID: 0}
+  playerDamageScreen: {fileID: 0}
 --- !u!1 &307603253
 GameObject:
   m_ObjectHideFlags: 0
@@ -5000,7 +5007,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2315417f3d9b64844a6f616852226960, type: 2}
+  - {fileID: 2100000, guid: 2d49ee3fbeb3b404b9635d6107b278e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5029,7 +5036,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838789518}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: d8c009e0a861e3b4c863179eb57b1a86, type: 3}
 --- !u!4 &1838789523
 Transform:
   m_ObjectHideFlags: 0
@@ -6458,7 +6465,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &5653032201780773738
 MonoBehaviour:
   m_ObjectHideFlags: 0
