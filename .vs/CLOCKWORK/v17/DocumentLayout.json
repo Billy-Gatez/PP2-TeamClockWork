@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\CLOCKWORK\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,33 +26,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "meleeHitbox.cs",
               "DocumentMoniker": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs",
               "RelativeDocumentMoniker": "ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs",
-              "ToolTip": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs",
-              "RelativeToolTip": "ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAA==",
+              "ToolTip": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs [Read Only]",
+              "RelativeToolTip": "ClockWorkHorrors\\Assets\\Scripts\\meleeHitbox.cs [Read Only]",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAABAAAAAQAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-16T02:30:05.087Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "EditorCaption": " [Read Only]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "enemyAi.cs",
               "DocumentMoniker": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs",
               "RelativeDocumentMoniker": "ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs",
-              "ToolTip": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs",
-              "RelativeToolTip": "ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAmwBQAAAAVAAAAAAAAAA==",
+              "ToolTip": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs [Read Only]*",
+              "RelativeToolTip": "ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs [Read Only]*",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAG0AAAAlAAAAAQAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-16T02:23:26.206Z",
-              "EditorCaption": ""
+              "EditorCaption": " [Read Only]"
             }
           ]
         }
