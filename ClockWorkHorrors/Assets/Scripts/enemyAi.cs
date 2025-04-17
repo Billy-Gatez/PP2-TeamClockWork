@@ -1,3 +1,5 @@
+// Jeremy Cahill
+
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
