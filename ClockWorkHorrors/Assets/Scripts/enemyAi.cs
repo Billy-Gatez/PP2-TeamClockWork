@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class enemyAI : MonoBehaviour, meDamage
 {
     [SerializeField] Renderer model;
-    [SerializeField] int HP;
+    [SerializeField] int HP = 10; // Ensure HP is initialized to a positive value
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
@@ -31,6 +31,7 @@ public class enemyAI : MonoBehaviour, meDamage
     {
         playerDir = (gamemanager.instance.player.transform.position - transform.position);
         agent.SetDestination(gamemanager.instance.player.transform.position);
+
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             faceTarget();
@@ -47,9 +48,13 @@ public class enemyAI : MonoBehaviour, meDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        Debug.Log("Enemy took damage. Current HP: " + HP); // Debug log for HP
+
         StartCoroutine(flashRed());
+
         if (HP <= 0)
         {
+            Debug.Log("Enemy destroyed."); // Debug log for destruction
             gamemanager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
@@ -72,5 +77,15 @@ public class enemyAI : MonoBehaviour, meDamage
     {
         Quaternion rot = Quaternion.LookRotation(playerDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+    }
+
+    // Example of how to handle damage from a bullet
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PlayerBullet"))
+        {
+            takeDamage(1); // Assuming each bullet does 1 damage
+            Destroy(other.gameObject); // Destroy the bullet after hitting
+        }
     }
 }
