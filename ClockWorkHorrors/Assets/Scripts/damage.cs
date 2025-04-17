@@ -1,47 +1,26 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 
 public class damage : MonoBehaviour
 {
-    enum damageType { moving, stationary, Dot, homing }
-
+    enum damageType { moving, stationary, overtime, trap}
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
-    [SerializeField] int damageAmount;
-    [SerializeField] float damageRate;
-    [SerializeField] int speed;
-    [SerializeField] int destroyTime;
+    [Range(1,10)] [SerializeField] int damageAmount;
+    [Range(.25f, 1f)][SerializeField] float damageTime;
+    [Range(10,45)][SerializeField] int speed;
+    [Range(1,4)] [SerializeField] int destroyTime;
 
     bool isDamaging;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-
     {
-
-        if (type == damageType.moving || type == damageType.homing)
-
+        if(type == damageType.moving)
         {
-
+            rb.linearVelocity = transform.forward * speed;
             Destroy(gameObject, destroyTime);
-            if (type == damageType.moving)
-            {
-
-                rb.linearVelocity = transform.forward * speed;
-            }
-
-
-        }
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (type == damageType.homing)
-        {
-            rb.linearVelocity = (gamemanager.instance.player.transform.position - transform.position).normalized * speed * Time.deltaTime;
         }
     }
 
@@ -53,16 +32,14 @@ public class damage : MonoBehaviour
         }
 
         IDamage dmg = other.GetComponent<IDamage>();
-
-        if (dmg != null && (type == damageType.stationary || type == damageType.moving || type == damageType.homing))
-
+        if(dmg != null && (type==damageType.stationary || type==damageType.moving || type==damageType.trap))
         {
             dmg.takeDamage(damageAmount);
         }
 
-    if (type == damageType.moving || type == damageType.homing)
+        if(type == damageType.moving)
         {
-
+            Destroy(gameObject);
         }
     }
 
@@ -72,13 +49,14 @@ public class damage : MonoBehaviour
         {
             return;
         }
+
         IDamage dmg = other.GetComponent<IDamage>();
 
-        if (dmg != null && type == damageType.Dot)
+        if (dmg != null && type == damageType.overtime)
         {
-            if (!isDamaging)
-            {
-                StartCoroutine (damageOther(dmg));
+            if (!isDamaging) 
+            { 
+                StartCoroutine(damageOther(dmg));
             }
         }
     }
@@ -86,8 +64,11 @@ public class damage : MonoBehaviour
     IEnumerator damageOther(IDamage d)
     {
         isDamaging = true;
+
         d.takeDamage(damageAmount);
-        yield return new WaitForSeconds(damageRate);
+        yield return new WaitForSeconds(damageTime);
+
         isDamaging = false;
     }
+
 }

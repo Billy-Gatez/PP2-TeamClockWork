@@ -1,62 +1,69 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
-    [SerializeField] int HP;
-    [SerializeField] int speed;
-    [SerializeField] int sprintMod;
-    [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpMax;
-    [SerializeField] int gravity;
-    [SerializeField] int shootDamage;
+
+    [Range(1,10)][SerializeField] int HP;
+    [Range(2,5)] [SerializeField] int speed;
+    [Range(2, 4)] [SerializeField] int sprintMod;
+    [Range(5,20)] [SerializeField] int jumpSpeed;
+    [Range(1,3)][SerializeField] int jumpsMax;
+    [Range(5,50)] [SerializeField] int gravity;
+
+    [SerializeField] int shootDmg;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
 
     int jumpCount;
+    int HPOrig;
+
     float shootTimer;
+
     Vector3 moveDir;
     Vector3 playerVel;
-    int HPOrig;
-    bool isSprinting;
-
-
-
-    
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        HPOrig = HP; 
+        HPOrig = HP;
         updatePlayerUI();
     }
 
-   
+    // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.green);
+
         movement();
+
         sprint();
     }
 
     void movement()
     {
+        shootTimer += Time.deltaTime;
         if (controller.isGrounded)
         {
             jumpCount = 0;
             playerVel = Vector3.zero;
         }
 
-        moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
+        //moveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //transform.position += moveDir * speed * Time.deltaTime;
+        moveDir = (Input.GetAxis("Horizontal") * transform.right) +
+                         (Input.GetAxis("Vertical") * transform.forward);
         controller.Move(moveDir * speed * Time.deltaTime);
 
         jump();
 
-        playerVel.y -= gravity * Time.deltaTime;
         controller.Move(playerVel * Time.deltaTime);
+        playerVel.y -= gravity * Time.deltaTime;
 
-        shootTimer += Time.deltaTime;
-        if (Input.GetButton("Fire1") && shootTimer >= shootRate)
+        if (Input.GetButton("Fire1") && shootTimer>=shootRate)
         {
             shoot();
         }
@@ -64,7 +71,7 @@ public class playerController : MonoBehaviour, IDamage
 
     void jump()
     {
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (Input.GetButtonDown("Jump") && jumpCount<jumpsMax)
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
@@ -93,39 +100,35 @@ public class playerController : MonoBehaviour, IDamage
             Debug.Log(hit.collider.name);
 
             IDamage dmg = hit.collider.GetComponent<IDamage>();
-            if (dmg != null)
+
+            if(dmg != null)
             {
-                dmg.takeDamage(shootDamage);
+                dmg.takeDamage(shootDmg);
             }
         }
     }
 
     public void takeDamage(int amount)
     {
-        HP -= amount; 
+        HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashDamageScreen());
-        if (HP <= 0)
 
-
-
-
+        if(HP <= 0)
         {
             gamemanager.instance.youLose();
-
         }
-
-    }
-
-    public void updatePlayerUI()
-    {
-        gamemanager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 
     IEnumerator flashDamageScreen()
     {
         gamemanager.instance.playerDamageScreen.SetActive(true);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(.1f);
         gamemanager.instance.playerDamageScreen.SetActive(false);
+    }
+
+    public void updatePlayerUI()
+    {
+        gamemanager.instance.PlayerHPBar.fillAmount = (float)HP / HPOrig;
     }
 }

@@ -1,69 +1,54 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Animator anim;
 
-    [SerializeField] int HP;
+    [Range(0,100)][SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
+    [SerializeField] int animTransSpeed;
 
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
-
-    [SerializeField] GameObject meleeHitbox;
-    [SerializeField] float meleeCooldown;
-    [SerializeField] float meleeRange;
-
-    float meleeTimer;
-
-
-    bool playerInRange;
-
     float shootTimer;
 
-    Color colorOrig;
-
     Vector3 playerDir;
+
+    bool playerInRange;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrig = model.material.color;
         gamemanager.instance.updateGameGoal(1);
     }
 
     // Update is called once per frame
     void Update()
-       
     {
-        if (playerInRange) 
-        playerDir = (gamemanager.instance.player.transform.position - transform.position);
-
-        agent.SetDestination(gamemanager.instance.player.transform.position);
-
-        if (agent.remainingDistance <= agent.stoppingDistance)
-        {
-            faceTarget();
-        }
-
+        float agentSpeed = agent.velocity.normalized.magnitude;
+        float animSpeedCurr = anim.GetFloat("Speed");
+        anim.SetFloat("Speed", Mathf.Lerp(animSpeedCurr,agentSpeed,Time.deltaTime * animTransSpeed));
         shootTimer += Time.deltaTime;
-        meleeTimer += Time.deltaTime;
-
-        float distToPlayer = Vector3.Distance(transform.position, gamemanager.instance.player.transform.position);
-
-        // Prefer melee if close enough
-        if (distToPlayer <= meleeRange && meleeTimer >= meleeCooldown)
+        if (playerInRange)
         {
-            meleeAttack();
-        }
-        else if (shootTimer >= shootRate)
-        {
-            shoot();
+            playerDir = gamemanager.instance.player.transform.position - transform.position;
+            agent.SetDestination(gamemanager.instance.player.transform.position);
+
+            if (shootTimer >= shootRate)
+            {
+                shoot();
+            }
+
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                faceTarget();
+            }
         }
     }
 
@@ -83,13 +68,17 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
+    void faceTarget()
+    {
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+    }
+
     public void takeDamage(int amount)
     {
         HP -= amount;
-
-        StartCoroutine(flashred());
-
         StartCoroutine(flashRed());
+
         agent.SetDestination(gamemanager.instance.player.transform.position);
 
         if (HP <= 0)
@@ -99,11 +88,11 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator flashred()
+    IEnumerator flashRed()
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrig;
+        model.material.color = Color.white;
     }
 
     void shoot()
@@ -111,19 +100,4 @@ public class enemyAI : MonoBehaviour, IDamage
         shootTimer = 0;
         Instantiate(bullet, shootPos.position, transform.rotation);
     }
-
-    void faceTarget()
-    {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
-    }
-
-    void meleeAttack()
-    {
-        meleeTimer = 0;
-        meleeHitbox.SetActive(true);
-    }
 }
-
-
-

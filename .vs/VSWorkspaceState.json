@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ClockWorkHorrors",
+    "\\ClockWorkHorrors\\Assets"
   ],
-  "SelectedNode": "\\D:\\CLOCKWORK",
+  "SelectedNode": "\\ClockWorkHorrors\\Assets\\Scripts",
   "PreviewInSolutionExplorer": false
 }
