@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour, IDamage
+public class enemyAI : MonoBehaviour, meDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] int HP;
@@ -33,7 +33,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             faceTarget();
         }
-            
+
         shootTimer += Time.deltaTime;
 
         if (shootTimer >= shootRate)

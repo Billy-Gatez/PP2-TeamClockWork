@@ -1,6 +1,7 @@
 using UnityEngine;
+using System.Collections;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, meDamage
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
@@ -21,15 +22,16 @@ public class playerController : MonoBehaviour, IDamage
     int HPOrig;
     bool isSprinting;
 
-  
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    
     void Start()
     {
-        HPOrig = HP; // Assuming HP is defined elsewhere in your class
+        HPOrig = HP; 
+        updatePlayerUI();
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
@@ -90,7 +92,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             Debug.Log(hit.collider.name);
 
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
+            meDamage dmg = hit.collider.GetComponent<meDamage>();
             if (dmg != null)
             {
                 dmg.takeDamage(shootDamage);
@@ -100,10 +102,34 @@ public class playerController : MonoBehaviour, IDamage
 
     public void takeDamage(int amount)
     {
-        HP -= amount; // Assuming HP is defined elsewhere in your class
+        HP -= amount; 
+        updatePlayerUI();
+        StartCoroutine(flashDamageScreen());
         if (HP <= 0)
+
+
+
+
         {
-            gamemanager.instance.youLose(); // Assuming GameManager is a singleton
+
+
+
+            
+            gamemanager.instance.youLose();
+
         }
+
+    }
+
+    public void updatePlayerUI()
+    {
+        gamemanager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    IEnumerator flashDamageScreen()
+    {
+        gamemanager.instance.playerDamageScreen.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        gamemanager.instance.playerDamageScreen.SetActive(false);
     }
 }

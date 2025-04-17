@@ -1,4 +1,8 @@
+
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class gamemanager : MonoBehaviour
 
@@ -10,10 +14,14 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] TMP_Text gameGoalCountText;
 
     public GameObject player;
     public playerController playerScript;
     public bool isPaused;
+
+    public Image playerHPBar;
+    public GameObject playerDamageScreen;
 
     float timeScaleOrig;
 
@@ -77,6 +85,7 @@ public class gamemanager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
+        gameGoalCountText.text = gameGoalCount.ToString("F0");
 
         if (gameGoalCount <= 0)
         {
@@ -92,4 +101,6 @@ public class gamemanager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
+
+    
 }
