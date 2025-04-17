@@ -1,5 +1,7 @@
+//Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
+
 using UnityEngine;
-using UnityEngine.UI; //gives access to images
+using UnityEngine.UI; 
 using TMPro;
 
 public class gamemanager : MonoBehaviour
@@ -17,7 +19,7 @@ public class gamemanager : MonoBehaviour
     
 
     public GameObject player;
-    public NewMonoBehaviourScript playerScript;
+    public playerController playerScript;
 
 
     public bool isPaused;
@@ -28,17 +30,17 @@ public class gamemanager : MonoBehaviour
     public int currency;
     
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Awake()
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<NewMonoBehaviourScript>();
+        playerScript = player.GetComponent<playerController>();
 
         timeScaleOrig = Time.timeScale;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (Input.GetButtonDown("Cancel"))
@@ -59,6 +61,7 @@ public class gamemanager : MonoBehaviour
         }
 
     }
+
     public void statePause()
     {
         isPaused = !isPaused;

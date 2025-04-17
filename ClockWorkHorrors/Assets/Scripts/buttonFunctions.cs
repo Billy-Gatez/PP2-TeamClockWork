@@ -7,12 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
+    private float XP;
+
     public void resume()
     {
         gamemanager.instance.stateUnpause();
     }
 
-    public void restart() //this is lazy and you should never do this when creating a game
+    public void restart() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gamemanager.instance.stateUnpause();
@@ -29,12 +31,33 @@ public class buttonFunctions : MonoBehaviour
 
     public void increaseHP(int cost)
     {
+      
+        int healthPerCost = 1; 
+
+       
         if (gamemanager.instance.currency >= cost)
         {
-            gamemanager.instance.playerScript.HP += 1;
-            gamemanager.instance.currency -= cost;
-        }
+           
+            int healthGained = cost * healthPerCost;
 
+           
+            gamemanager.instance.playerScript.HP += healthGained;
+
+        
+            if (gamemanager.instance.playerScript.HP > gamemanager.instance.playerScript.HPOrig)
+            {
+                gamemanager.instance.playerScript.HP = gamemanager.instance.playerScript.HPOrig;
+            }
+
+           
+            gamemanager.instance.currency -= cost;
+
+            gamemanager.instance.playerHPBar.fillAmount = (float)gamemanager.instance.playerScript.HP / gamemanager.instance.playerScript.HPOrig;
+        }
+        else
+        {
+            Debug.Log("Not enough currency to increase HP!");
+        }
     }
 
 }

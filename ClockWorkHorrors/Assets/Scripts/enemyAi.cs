@@ -1,4 +1,5 @@
-//Mark Bennett 04/2025
+//Mark Bennett 04/2025 & Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
+
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI; 
@@ -10,7 +11,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
 
 
-    [SerializeField] int XP;
+    public int XP;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
 
@@ -27,14 +28,14 @@ public class enemyAI : MonoBehaviour, IDamage
 
     Vector3 playerDir;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+   
     void Start()
     {
         colorOrig = model.material.color;
-        gamemanager.instance.updateGameGoal(1, 0); //this works even if you have 15 millions enemies
+        gamemanager.instance.updateGameGoal(1, 0); 
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (playerInRange)
