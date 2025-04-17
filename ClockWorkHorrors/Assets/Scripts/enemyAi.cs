@@ -74,20 +74,20 @@ public class enemyAI : MonoBehaviour, IDamage
         }
 
     }
-    
 
 
-    public void takeDamage(int amount)
+   public void takeDamage(int amount)
     {
-       HP -= amount;
+        HP -= amount;
         StartCoroutine(flashRed());
 
         agent.SetDestination(gamemanager.instance.player.transform.position);
 
-        if ( HP <= 0 )
+        if (HP <= 0)
         {
-            gamemanager.instance.updateGameGoal(-1, XP); 
-            Destroy(gameObject);
+            gamemanager.instance.updateGameGoal(-1, XP);
+            gamemanager.instance.updateCurrency(XP); 
+            Destroy(gameObject); 
         }
     }
     IEnumerator flashRed()

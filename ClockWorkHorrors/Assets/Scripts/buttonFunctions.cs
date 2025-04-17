@@ -32,7 +32,7 @@ public class buttonFunctions : MonoBehaviour
     public void increaseHP(int cost)
     {
       
-        int healthPerCost = 1; 
+        int healthPerCost = 10; 
 
        
         if (gamemanager.instance.currency >= cost)
@@ -53,6 +53,9 @@ public class buttonFunctions : MonoBehaviour
             gamemanager.instance.currency -= cost;
 
             gamemanager.instance.playerHPBar.fillAmount = (float)gamemanager.instance.playerScript.HP / gamemanager.instance.playerScript.HPOrig;
+            
+        gamemanager.instance.updateCurrency(-cost); // Call the method to update currency display
+
         }
         else
         {

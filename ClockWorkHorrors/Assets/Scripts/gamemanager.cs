@@ -13,6 +13,7 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] TMP_Text xpText;
 
     public Image playerHPBar;
     public GameObject playerDamageScreen;
@@ -86,14 +87,26 @@ public class gamemanager : MonoBehaviour
         gameGoalCountText.text = gameGoalCount.ToString("F0");
         currency += cur;
 
-        if(gameGoalCount <= 0)
+        if (gameGoalCount <= 0)
         {
-            // You won!
+            
             statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);
         }
     }
+    public void updateCurrency(int amount)
+    {
+        currency += amount;
+        xpText.text = " " + currency.ToString("F0");
+
+        if (currency < 0)
+        {
+            currency = 0; // Prevents negative currency
+            xpText.text = " " + currency.ToString("F0");
+        }
+    }
+
     public void youLose()
     {
         statePause();
