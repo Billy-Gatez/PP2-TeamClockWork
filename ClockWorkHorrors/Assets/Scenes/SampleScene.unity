@@ -1025,10 +1025,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1079639782}
     m_Modifications:
-    - target: {fileID: 4930995447131928371, guid: e7aadadb6750f924baf68a6836d74029, type: 3}
-      propertyPath: HP
-      value: 106
-      objectReference: {fileID: 0}
     - target: {fileID: 100052, guid: f4209d51d1ad0434299f2d498ee076ba, type: 3}
       propertyPath: m_Name
       value: ToonSoldier_WW2_demo (1)
@@ -1076,6 +1072,10 @@ PrefabInstance:
     - target: {fileID: 400052, guid: f4209d51d1ad0434299f2d498ee076ba, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930995447131928371, guid: e7aadadb6750f924baf68a6836d74029, type: 3}
+      propertyPath: HP
+      value: 106
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1872,10 +1872,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1079639782}
     m_Modifications:
-    - target: {fileID: 4930995447131928371, guid: e7aadadb6750f924baf68a6836d74029, type: 3}
-      propertyPath: HP
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 100052, guid: f4209d51d1ad0434299f2d498ee076ba, type: 3}
       propertyPath: m_Name
       value: ToonSoldier_WW2_demo
@@ -1923,6 +1919,10 @@ PrefabInstance:
     - target: {fileID: 400052, guid: f4209d51d1ad0434299f2d498ee076ba, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930995447131928371, guid: e7aadadb6750f924baf68a6836d74029, type: 3}
+      propertyPath: HP
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5425,7 +5425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100046, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100048, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
       propertyPath: m_Layer
@@ -5549,7 +5549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400044, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.9535906
+      value: 6.3
       objectReference: {fileID: 0}
     - target: {fileID: 400044, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
       propertyPath: m_LocalPosition.y
