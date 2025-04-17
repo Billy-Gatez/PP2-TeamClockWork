@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7520812076815238205
+--- !u!1 &2243140367543990789
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,66 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5631811960995222076}
-  - component: {fileID: 4823962368447789048}
-  - component: {fileID: 4228896893860512073}
-  - component: {fileID: 7903594315589275165}
-  - component: {fileID: 1661430672302905477}
-  m_Layer: 0
+  - component: {fileID: 4942835161497524483}
+  - component: {fileID: 3894235213322011357}
+  - component: {fileID: 5056517495241577688}
+  - component: {fileID: 9105027050878455392}
+  - component: {fileID: 1853381473495848346}
+  m_Layer: 9
   m_Name: Lava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5631811960995222076
+--- !u!4 &4942835161497524483
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7520812076815238205}
+  m_GameObject: {fileID: 2243140367543990789}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.7, y: 0.09, z: 2.41}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalPosition: {x: -44.69586, y: 0.7750299, z: 18.806076}
+  m_LocalScale: {x: 25, y: 1, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4823962368447789048
+--- !u!114 &3894235213322011357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2243140367543990789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d940746b4c6af30499cba22479901b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  rb: {fileID: 0}
+  damageAmount: 1
+  damageRate: 1
+  speed: 0
+  destroyTime: 0
+--- !u!33 &5056517495241577688
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7520812076815238205}
+  m_GameObject: {fileID: 2243140367543990789}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4228896893860512073
+--- !u!23 &9105027050878455392
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7520812076815238205}
+  m_GameObject: {fileID: 2243140367543990789}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -66,7 +84,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20d1c471c2bf29044a0ee6191200eb9d, type: 2}
+  - {fileID: 2100000, guid: 904fec363e7922447a45537523973272, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,13 +106,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7903594315589275165
+--- !u!65 &1853381473495848346
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7520812076815238205}
+  m_GameObject: {fileID: 2243140367543990789}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -109,21 +127,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1661430672302905477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7520812076815238205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61b0d42e8100760419b254f814aa92ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  rb: {fileID: 0}
-  damageAmount: 25
-  damageRate: 1
-  speed: 0
-  destroyTime: 0
