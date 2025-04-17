@@ -2,96 +2,50 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour, IDamage
+public class enemyAI : MonoBehaviour, meDamage
 {
     [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
-
     [SerializeField] int HP;
-    [SerializeField] int faceTargetSpeed;
-
+    [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
+    [SerializeField] int faceTargetSpeed;
     [SerializeField] float shootRate;
-
-
-    [SerializeField] GameObject meleeHitbox;
-    [SerializeField] float meleeCooldown;
-    [SerializeField] float meleeRange;
-
-    float meleeTimer;
-
-
-    bool playerInRange;
 
     float shootTimer;
 
     Color colorOrig;
-
     Vector3 playerDir;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrig = model.material.color;
+        colorOrig = model.material.color; // Store the original color
         gamemanager.instance.updateGameGoal(1);
     }
 
     // Update is called once per frame
     void Update()
-       
     {
-        if (playerInRange) 
         playerDir = (gamemanager.instance.player.transform.position - transform.position);
-
         agent.SetDestination(gamemanager.instance.player.transform.position);
-
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             faceTarget();
         }
 
         shootTimer += Time.deltaTime;
-        meleeTimer += Time.deltaTime;
 
-        float distToPlayer = Vector3.Distance(transform.position, gamemanager.instance.player.transform.position);
-
-        // Prefer melee if close enough
-        if (distToPlayer <= meleeRange && meleeTimer >= meleeCooldown)
-        {
-            meleeAttack();
-        }
-        else if (shootTimer >= shootRate)
+        if (shootTimer >= shootRate)
         {
             shoot();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
         }
     }
 
     public void takeDamage(int amount)
     {
         HP -= amount;
-
-        StartCoroutine(flashred());
-
         StartCoroutine(flashRed());
-        agent.SetDestination(gamemanager.instance.player.transform.position);
-
         if (HP <= 0)
         {
             gamemanager.instance.updateGameGoal(-1);
@@ -99,7 +53,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator flashred()
+    IEnumerator flashRed()
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
@@ -114,16 +68,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
+        Quaternion rot = Quaternion.LookRotation(playerDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
-
-    void meleeAttack()
-    {
-        meleeTimer = 0;
-        meleeHitbox.SetActive(true);
-    }
 }
-
-
-

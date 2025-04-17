@@ -52,7 +52,7 @@ public class damage : MonoBehaviour
             return;
         }
 
-        IDamage dmg = other.GetComponent<IDamage>();
+        meDamage dmg = other.GetComponent<meDamage>();
 
         if (dmg != null && (type == damageType.stationary || type == damageType.moving || type == damageType.homing))
 
@@ -72,7 +72,7 @@ public class damage : MonoBehaviour
         {
             return;
         }
-        IDamage dmg = other.GetComponent<IDamage>();
+        meDamage dmg = other.GetComponent<meDamage>();
 
         if (dmg != null && type == damageType.Dot)
         {
@@ -83,7 +83,7 @@ public class damage : MonoBehaviour
         }
     }
 
-    IEnumerator damageOther(IDamage d)
+    IEnumerator damageOther(meDamage d)
     {
         isDamaging = true;
         d.takeDamage(damageAmount);

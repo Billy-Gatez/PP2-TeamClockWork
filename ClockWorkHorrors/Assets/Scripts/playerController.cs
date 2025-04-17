@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, meDamage
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
@@ -92,7 +92,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             Debug.Log(hit.collider.name);
 
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
+            meDamage dmg = hit.collider.GetComponent<meDamage>();
             if (dmg != null)
             {
                 dmg.takeDamage(shootDamage);
@@ -111,13 +111,12 @@ public class playerController : MonoBehaviour, IDamage
 
 
         {
-<<<<<<< Updated upstream
+
+
+
+            
             gamemanager.instance.youLose();
 
-=======
-            // You lose!!
-            gamemanager.instance.youLose();
->>>>>>> Stashed changes
         }
 
     }

@@ -18,7 +18,7 @@ public class meleeHitbox : MonoBehaviour
         if (alreadyHit || other.isTrigger)
             return;
 
-        IDamage dmg = other.GetComponent<IDamage>();
+        meDamage dmg = other.GetComponent<meDamage>();
         if (dmg != null)
         {
             dmg.takeDamage(damageAmount);
