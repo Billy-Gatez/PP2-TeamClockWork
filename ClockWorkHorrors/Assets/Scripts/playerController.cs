@@ -111,8 +111,13 @@ public class playerController : MonoBehaviour, IDamage
 
 
         {
+<<<<<<< Updated upstream
             gamemanager.instance.youLose();
 
+=======
+            // You lose!!
+            gamemanager.instance.youLose();
+>>>>>>> Stashed changes
         }
 
     }
