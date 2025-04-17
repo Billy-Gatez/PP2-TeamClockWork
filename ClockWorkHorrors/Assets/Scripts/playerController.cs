@@ -19,6 +19,12 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
 
+    [SerializeField] float crouchHeight = 0.5f; 
+    [SerializeField] float normalHeight = 1.0f; 
+    [SerializeField] float crouchSpeed = 2.0f; 
+    bool isCrouching = false;
+
+
     int jumpCount;
     public int HPOrig;
     public int HP;
@@ -35,7 +41,9 @@ public class playerController : MonoBehaviour, IDamage
     void Start()
     {
         HPOrig = HP;
+        controller.height = normalHeight;
         updatePlayerUI();
+        
     }
 
 
@@ -46,6 +54,9 @@ public class playerController : MonoBehaviour, IDamage
         movement();
 
         sprint();
+
+        crouch();
+
     }
 
     void movement()
@@ -94,6 +105,20 @@ public class playerController : MonoBehaviour, IDamage
         else if (Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMod;
+        }
+    }
+
+    void crouch()
+    {
+        if (Input.GetButtonDown("Crouch") && !isCrouching) 
+        {
+            isCrouching = true;
+            controller.height = crouchHeight; 
+        }
+        else if (Input.GetButtonUp("Crouch") && isCrouching)
+        {
+            isCrouching = false;
+            controller.height = normalHeight; 
         }
     }
 

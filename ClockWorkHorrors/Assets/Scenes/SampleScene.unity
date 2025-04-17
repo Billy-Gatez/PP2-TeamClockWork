@@ -1492,9 +1492,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 878217945725534900, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
+      propertyPath: m_Height
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1433777530507230510, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
       propertyPath: m_Name
       value: 'Player '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563766333687741272, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1563766333687741272, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1502,7 +1510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1563766333687741272, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1563766333687741272, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1549,8 +1557,24 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4763942993568944393, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
+      propertyPath: HPOrig
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763942993568944393, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
+      propertyPath: crouchSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763942993568944393, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
       propertyPath: shootDamage
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763942993568944393, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
+      propertyPath: crouchHeight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763942993568944393, guid: a33ea546209d6b1499a59501dd5ff07d, type: 3}
+      propertyPath: normalHeight
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

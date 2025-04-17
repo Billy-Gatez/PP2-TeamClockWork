@@ -102,7 +102,7 @@ public class gamemanager : MonoBehaviour
 
         if (currency < 0)
         {
-            currency = 0; // Prevents negative currency
+            currency = 0; 
             xpText.text = " " + currency.ToString("F0");
         }
     }

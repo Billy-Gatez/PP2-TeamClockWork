@@ -49,12 +49,11 @@ public class buttonFunctions : MonoBehaviour
                 gamemanager.instance.playerScript.HP = gamemanager.instance.playerScript.HPOrig;
             }
 
-           
             gamemanager.instance.currency -= cost;
 
             gamemanager.instance.playerHPBar.fillAmount = (float)gamemanager.instance.playerScript.HP / gamemanager.instance.playerScript.HPOrig;
             
-        gamemanager.instance.updateCurrency(-cost); // Call the method to update currency display
+        gamemanager.instance.updateCurrency(-cost); 
 
         }
         else
