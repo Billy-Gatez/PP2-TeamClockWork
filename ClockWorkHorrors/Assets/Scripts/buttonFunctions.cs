@@ -1,3 +1,5 @@
+//Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
+
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,12 +29,12 @@ public class buttonFunctions : MonoBehaviour
 
     public void increaseHP(int cost)
     {
-        if (gamemanager.instance.currency >=cost)
+        if (gamemanager.instance.currency >= cost)
         {
             gamemanager.instance.playerScript.HP += 1;
             gamemanager.instance.currency -= cost;
         }
-        
+
     }
 
-} 
+}

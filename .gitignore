@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs/CLOCKWORK/FileContentIndex
+ClockWorkHorrors/Assets/Scenes/SampleScene.unity
+ClockWorkHorrors/Assets/Scripts/buttonFunctions.cs
+*.unity
