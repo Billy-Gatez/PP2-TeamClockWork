@@ -5,55 +5,85 @@ using UnityEngine.AI;
 public class enemyAI : MonoBehaviour, meDamage
 {
     [SerializeField] Renderer model;
-    [SerializeField] int HP;
     [SerializeField] NavMeshAgent agent;
+
+    [SerializeField] int XP;
+    [SerializeField] int HP;
+    [SerializeField] int faceTargetSpeed;
+
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
-    [SerializeField] int faceTargetSpeed;
     [SerializeField] float shootRate;
+
+    bool playerInRange;
 
     float shootTimer;
 
     Color colorOrig;
+
     Vector3 playerDir;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrig = model.material.color; // Store the original color
-        gamemanager.instance.updateGameGoal(1);
+        colorOrig = model.material.color;
+        //gamemanager.instance.updateGameGoal(1, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerDir = (gamemanager.instance.player.transform.position - transform.position);
-        agent.SetDestination(gamemanager.instance.player.transform.position);
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (playerInRange)
         {
-            faceTarget();
+            playerDir = (gamemanager.instance.player.transform.position - transform.position);
+
+            agent.SetDestination(gamemanager.instance.player.transform.position);
+
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                faceTarget();
+            }
+
+            shootTimer += Time.deltaTime;
+
+            if (shootTimer >= shootRate)
+            {
+                shoot();
+            }
         }
+    }
 
-        shootTimer += Time.deltaTime;
-
-        if (shootTimer >= shootRate)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            shoot();
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
         }
     }
 
     public void takeDamage(int amount)
     {
         HP -= amount;
-        StartCoroutine(flashRed());
+        StartCoroutine(flashred());
+
+        agent.SetDestination(gamemanager.instance.player.transform.position);
+
         if (HP <= 0)
         {
-            gamemanager.instance.updateGameGoal(-1);
+            //gamemanager.instance.updateGameGoal(-1, XP);
             Destroy(gameObject);
         }
     }
 
-    IEnumerator flashRed()
+    IEnumerator flashred()
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
@@ -68,7 +98,7 @@ public class enemyAI : MonoBehaviour, meDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(playerDir);
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 }

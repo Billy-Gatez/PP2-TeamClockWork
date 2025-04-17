@@ -1,13 +1,9 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class gamemanager : MonoBehaviour
-
 {
-
     public static gamemanager instance;
 
     [SerializeField] GameObject menuActive;
@@ -16,21 +12,21 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text gameGoalCountText;
 
-    public GameObject player;
-    public playerController playerScript;
-    public bool isPaused;
-
     public Image playerHPBar;
     public GameObject playerDamageScreen;
+
+    public GameObject player;
+    public playerController playerScript;
+
+    public bool isPaused;
 
     float timeScaleOrig;
 
     int gameGoalCount;
+    public int currency;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
     void Awake()
-
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
@@ -40,18 +36,15 @@ public class gamemanager : MonoBehaviour
     }
 
     // Update is called once per frame
-
     void Update()
     {
-
-
         if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
             {
                 statePause();
                 menuActive = menuPause;
-                menuPause.SetActive(true);
+                menuActive.SetActive(true);
             }
             else if (menuActive == menuPause)
             {
@@ -61,7 +54,6 @@ public class gamemanager : MonoBehaviour
     }
 
     public void statePause()
-
     {
         isPaused = !isPaused;
         Time.timeScale = 0;
@@ -70,25 +62,24 @@ public class gamemanager : MonoBehaviour
     }
 
     public void stateUnpause()
-
     {
         isPaused = !isPaused;
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
         menuActive.SetActive(false);
         menuActive = null;
-
     }
 
-    public void updateGameGoal(int amount)
+    public void updateGameGoal(int amount, int cur)
     {
         gameGoalCount += amount;
         gameGoalCountText.text = gameGoalCount.ToString("F0");
+        currency += cur;
 
         if (gameGoalCount <= 0)
         {
+            //You Win
             statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);
@@ -102,5 +93,5 @@ public class gamemanager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    
+
 }

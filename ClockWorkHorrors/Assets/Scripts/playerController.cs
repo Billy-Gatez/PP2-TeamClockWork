@@ -5,37 +5,43 @@ public class playerController : MonoBehaviour, meDamage
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
-    [SerializeField] int HP;
+
+    public int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpSpeed;
     [SerializeField] int jumpMax;
     [SerializeField] int gravity;
+
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
-    [SerializeField] float shootRate;
+    [SerializeField] int shootRate;
+
 
     int jumpCount;
+    int HPOrig;
+
     float shootTimer;
+
     Vector3 moveDir;
     Vector3 playerVel;
-    int HPOrig;
+
     bool isSprinting;
-
-
-
-    
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        HPOrig = HP; 
-        updatePlayerUI();
+        HPOrig = HP;
+        //updatePlayerUI();
     }
 
-   
+    // Update is called once per frame
     void Update()
     {
+
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+
         movement();
+
         sprint();
     }
 
@@ -47,7 +53,12 @@ public class playerController : MonoBehaviour, meDamage
             playerVel = Vector3.zero;
         }
 
-        moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
+        moveDir = (Input.GetAxis("Horizontal") * transform.right) +
+                 (Input.GetAxis("Vertical") * transform.forward);
+
+
+        // transform.position += moveDir * speed * Time.deltaTime;
+
         controller.Move(moveDir * speed * Time.deltaTime);
 
         jump();
@@ -56,6 +67,7 @@ public class playerController : MonoBehaviour, meDamage
         controller.Move(playerVel * Time.deltaTime);
 
         shootTimer += Time.deltaTime;
+
         if (Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
             shoot();
@@ -93,6 +105,7 @@ public class playerController : MonoBehaviour, meDamage
             Debug.Log(hit.collider.name);
 
             meDamage dmg = hit.collider.GetComponent<meDamage>();
+
             if (dmg != null)
             {
                 dmg.takeDamage(shootDamage);
@@ -102,23 +115,15 @@ public class playerController : MonoBehaviour, meDamage
 
     public void takeDamage(int amount)
     {
-        HP -= amount; 
-        updatePlayerUI();
+        HP -= amount;
+        //updatePlayerUI();
         StartCoroutine(flashDamageScreen());
+
         if (HP <= 0)
-
-
-
-
         {
-
-
-
-            
+            //You Lose!
             gamemanager.instance.youLose();
-
         }
-
     }
 
     public void updatePlayerUI()
@@ -129,7 +134,7 @@ public class playerController : MonoBehaviour, meDamage
     IEnumerator flashDamageScreen()
     {
         gamemanager.instance.playerDamageScreen.SetActive(true);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         gamemanager.instance.playerDamageScreen.SetActive(false);
     }
 }
