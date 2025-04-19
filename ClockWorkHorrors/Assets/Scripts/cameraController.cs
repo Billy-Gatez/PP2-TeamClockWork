@@ -21,22 +21,29 @@ public class cameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        // Get joystick input for camera control
+        float joystickX = Input.GetAxis("RightJoystickHorizontal") * sens * Time.deltaTime;
+        float joystickY = Input.GetAxis("RightJoystickVertical") * sens * Time.deltaTime;
+
+
         // get input 
         float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
-        
-        if (invertY)
-        rotX += mouseY;
-        else
-            rotX -= mouseY;
 
-        //clamp the camera on the x axis 
+
+        // Combine mouse and joystick input
+        float combinedMouseX = mouseX + joystickX;
+        float combinedMouseY = (invertY ? joystickY : -joystickY) + (invertY ? mouseY : -mouseY);
+
+        // Handle vertical rotation
+        rotX += combinedMouseY;
         rotX = Mathf.Clamp(rotX, lockVertMin, lockVertMax);
 
-        //rotate the camera on the x axis to look up and down
+        // Rotate the camera on the x-axis to look up and down
         transform.localRotation = Quaternion.Euler(rotX, 0, 0);
 
-        //rotate the player on  the y axis to look left and right
-        transform.parent.Rotate(Vector3.up * mouseX);
+        // Rotate the camera on the y-axis to look left and right
+        transform.parent.Rotate(Vector3.up * combinedMouseX);
     }
 }

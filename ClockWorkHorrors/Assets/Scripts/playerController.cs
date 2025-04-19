@@ -67,11 +67,9 @@ public class playerController : MonoBehaviour, IDamage
             playerVel = Vector3.zero;
         }
 
+        // Use Input.GetAxis for both keyboard and controller
         moveDir = (Input.GetAxis("Horizontal") * transform.right) +
-                 (Input.GetAxis("Vertical") * transform.forward);
-
-
-        //transform.position += moveDir * speed * Time.deltaTime;
+                   (Input.GetAxis("Vertical") * transform.forward);
 
         controller.Move(moveDir * speed * Time.deltaTime);
 
@@ -82,6 +80,7 @@ public class playerController : MonoBehaviour, IDamage
 
         shootTimer += Time.deltaTime;
 
+        // Use Input.GetButton for controller input
         if (Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
             shoot();
@@ -90,14 +89,17 @@ public class playerController : MonoBehaviour, IDamage
 
     void jump()
     {
+        // Use Input.GetButtonDown for controller input
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
     }
+
     void sprint()
     {
+        // Use Input.GetButtonDown and Input.GetButtonUp for controller input
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
@@ -110,15 +112,16 @@ public class playerController : MonoBehaviour, IDamage
 
     void crouch()
     {
-        if (Input.GetButtonDown("Crouch") && !isCrouching) 
+        // Use Input.GetButtonDown and Input.GetButtonUp for controller input
+        if (Input.GetButtonDown("Crouch") && !isCrouching)
         {
             isCrouching = true;
-            controller.height = crouchHeight; 
+            controller.height = crouchHeight;
         }
         else if (Input.GetButtonUp("Crouch") && isCrouching)
         {
             isCrouching = false;
-            controller.height = normalHeight; 
+            controller.height = normalHeight;
         }
     }
 
