@@ -1,12 +1,16 @@
+//Mark Bennett
+
 using UnityEngine;
 
 public class cameraController : MonoBehaviour
 {
-    [SerializeField] int sensitivity;
+
+    [SerializeField] int sens;
     [SerializeField] int lockVertMin, lockVertMax;
     [SerializeField] bool invertY;
 
     float rotX;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,24 +21,29 @@ public class cameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // get input
 
-        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        // Get joystick input for camera control
+        float joystickX = Input.GetAxis("RightJoystickHorizontal") * sens * Time.deltaTime;
+        float joystickY = Input.GetAxis("RightJoystickVertical") * sens * Time.deltaTime;
 
-        if (invertY)
-        { rotX += mouseY; }
-        else
-        { rotX -= mouseY; }
 
-        //clamp the camera on the x axis
+        // get input 
+        float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
 
+
+        // Combine mouse and joystick input
+        float combinedMouseX = mouseX + joystickX;
+        float combinedMouseY = (invertY ? joystickY : -joystickY) + (invertY ? mouseY : -mouseY);
+
+        // Handle vertical rotation
+        rotX += combinedMouseY;
         rotX = Mathf.Clamp(rotX, lockVertMin, lockVertMax);
 
-        //rotate camera on x axis for up/down
+        // Rotate the camera on the x-axis to look up and down
         transform.localRotation = Quaternion.Euler(rotX, 0, 0);
 
-        //rotate player on y axis for left/right
-        transform.parent.Rotate(Vector3.up * mouseX);
+        // Rotate the camera on the y-axis to look left and right
+        transform.parent.Rotate(Vector3.up * combinedMouseX);
     }
 }

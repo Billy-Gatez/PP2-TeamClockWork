@@ -1,3 +1,5 @@
+using System;
+using System.Runtime;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -5,11 +7,15 @@ using UnityEngine;
 public class gunStats : ScriptableObject
 {
     public GameObject model;
-    [Range(1,10)] public int shootDmg;
-    [Range(5, 1000)] public int shootDist;
-    [Range(.1f, 2)] public float shootRate;
-    [Range(5, 50)] public int ammoMax;
+    [Range(0,10)] public int shootDmg;
+    [Range(0, 1000)] public int shootDist;
+    [Range(0, 2)] public float shootRate;
+    [Range(0, 50)] public int ammoMax;
     [HideInInspector] public int ammoCurr;
+    [Range(0, 2)] public float weaponSpeedMod;
+    [Range(1, 100)] public int projectileAmount;
+
+
 
     public ParticleSystem hitEffect;
     public AudioClip[] shootSound;

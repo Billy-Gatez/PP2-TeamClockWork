@@ -1,5 +1,7 @@
+//Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
+
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; 
 using TMPro;
 
 public class gamemanager : MonoBehaviour
@@ -10,25 +12,36 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] TMP_Text goalCountText;
+    [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] TMP_Text xpText;
 
-    public Image PlayerHPBar;
+    public Image playerHPBar;
     public GameObject playerDamageScreen;
+    
+
     public GameObject player;
-    public playerController playerScript;
+    public PlayerController playerScript;
+
 
     public bool isPaused;
 
-    int goalCount;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    float timeScaleOrig;
+
+    int gameGoalCount;
+    public int currency;
+    
+
+    
     void Awake()
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<playerController>();
+        playerScript = player.GetComponent<PlayerController>();
+
+        timeScaleOrig = Time.timeScale;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (Input.GetButtonDown("Cancel"))
@@ -37,13 +50,17 @@ public class gamemanager : MonoBehaviour
             {
                 statePause();
                 menuActive = menuPause;
-                menuActive.SetActive(true);
+                menuActive.SetActive(isPaused);
             }
-            else if(menuActive == menuPause)
+            else if (menuActive == menuPause)
             {
                 stateUnpause();
             }
+
+
+
         }
+
     }
 
     public void statePause()
@@ -52,29 +69,41 @@ public class gamemanager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
     }
 
     public void stateUnpause()
     {
         isPaused = !isPaused;
-        Time.timeScale = 1;
+        Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
     }
 
-    public void updateGameGoal(int amount)
+    public void updateGameGoal(int amount, int cur)
     {
-        goalCount += amount;
-        goalCountText.text = goalCount.ToString("F0");
-        if(goalCount <= 0)
+        gameGoalCount += amount;
+        gameGoalCountText.text = gameGoalCount.ToString("F0");
+        currency += cur;
+
+        if (gameGoalCount <= 0)
         {
-            //you win!!
+            
             statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);
+        }
+    }
+    public void updateCurrency(int amount)
+    {
+        currency += amount;
+        xpText.text = " " + currency.ToString("F0");
+
+        if (currency < 0)
+        {
+            currency = 0; 
+            xpText.text = " " + currency.ToString("F0");
         }
     }
 

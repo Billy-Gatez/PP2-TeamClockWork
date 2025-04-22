@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 7e2b9cf432009be49acd8824476f2dcd
+  productGUID: b19f338e8d124474f954aecc9201b654
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Aluminati Studios
-  productName: ClockWorkHorrors
+  companyName: DefaultCompany
+  productName: FPS 2504
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -675,14 +675,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: ClockWorkHorrors
+  metroPackageName: FPS 2504
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: ClockWorkHorrors
+  metroApplicationDescription: FPS 2504
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -754,11 +754,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: e1a2b4f2-f7d7-425b-a6df-243527b53b7f
+  cloudProjectId: 4db86653-0980-42eb-ae83-644f11d789da
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: ClockWorkHorrors
-  organizationId: jm-cahill
+  projectName: FPS 2504
+  organizationId: mrisaiah22
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
