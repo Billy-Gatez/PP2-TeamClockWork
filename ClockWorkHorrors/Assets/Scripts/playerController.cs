@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class playerController : MonoBehaviour, IDamage
 {
@@ -14,7 +15,8 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int jumpMax;
     [SerializeField] int gravity;
-
+    [SerializeField] List<gunStats> gunList = new List<gunStats>();
+    [SerializeField] GameObject gunModel;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
@@ -24,6 +26,7 @@ public class playerController : MonoBehaviour, IDamage
     public int HPOrig;
     public int HP;
     public int XP;
+    int gunListPos;
 
     float shootTimer;
 
@@ -76,6 +79,14 @@ public class playerController : MonoBehaviour, IDamage
         controller.Move(playerVel * Time.deltaTime);
 
         shootTimer += Time.deltaTime;
+
+        if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
+        {
+            shoot();
+        }
+
+        selectGun();
+        reload();
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
@@ -147,6 +158,46 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.05f);
         gamemanager.instance.playerDamageScreen.SetActive(false);
     }
+    public void getGunStats(gunStats gun)
+    {
+        gunList.Add(gun);
+        gunListPos = gunList.Count - 1;
 
+        changeGun();
+    }
 
+    void selectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
+        {
+            gunListPos++;
+            changeGun();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        {
+            gunListPos--;
+            changeGun();
+        }
+    }
+
+    void changeGun()
+    {
+        shootDamage = gunList[gunListPos].shootDamage;
+        shootDist = gunList[gunListPos].shootDistance;
+        shootRate = (int)gunList[gunListPos].shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].model.GetComponent<MeshRenderer>().sharedMaterial;
+
+        updatePlayerUI();
+    }
+
+    void reload()
+    {
+        if (Input.GetButtonDown("Reload") && gunList.Count > 0)
+        {
+            gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+            updatePlayerUI();
+        }
+    }
 }
