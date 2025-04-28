@@ -14,7 +14,7 @@ public class buttonFunctions : MonoBehaviour
         gamemanager.instance.stateUnpause();
     }
 
-    public void restart() 
+    public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gamemanager.instance.stateUnpause();
@@ -31,19 +31,19 @@ public class buttonFunctions : MonoBehaviour
 
     public void increaseHP(int cost)
     {
-      
-        int healthPerCost = 10; 
 
-       
+        int healthPerCost = 10;
+
+
         if (gamemanager.instance.currency >= cost)
         {
-           
+
             int healthGained = cost * healthPerCost;
 
-           
+
             gamemanager.instance.playerScript.HP += healthGained;
 
-        
+
             if (gamemanager.instance.playerScript.HP > gamemanager.instance.playerScript.HPOrig)
             {
                 gamemanager.instance.playerScript.HP = gamemanager.instance.playerScript.HPOrig;
@@ -52,8 +52,8 @@ public class buttonFunctions : MonoBehaviour
             gamemanager.instance.currency -= cost;
 
             gamemanager.instance.playerHPBar.fillAmount = (float)gamemanager.instance.playerScript.HP / gamemanager.instance.playerScript.HPOrig;
-            
-        gamemanager.instance.updateCurrency(-cost); 
+
+            gamemanager.instance.updateCurrency(-cost);
 
         }
         else

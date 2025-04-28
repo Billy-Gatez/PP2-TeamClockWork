@@ -2,7 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
-using UnityEngine.AI; 
+using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
@@ -35,14 +35,14 @@ public class enemyAI : MonoBehaviour, IDamage
 
     Vector3 playerDir;
 
-   
+
     void Start()
     {
         colorOrig = model.material.color;
         gamemanager.instance.updateGameGoal(1, 0);
         agent.speed = patrolSpeed; // Set the agent speed for patrolling
 
-        
+
         // Generate patrol points within a 20x20 area
         GeneratePatrolPoints();
     }
@@ -88,7 +88,7 @@ public class enemyAI : MonoBehaviour, IDamage
         // Check if there are any patrol points assigned
         if (patrolPoints.Length == 0)
         {
-            
+
             return; // Exit the method if there are no patrol points
         }
 
@@ -128,7 +128,7 @@ public class enemyAI : MonoBehaviour, IDamage
     }
 
 
-   public void takeDamage(int amount)
+    public void takeDamage(int amount)
     {
         HP -= amount;
         StartCoroutine(flashRed());
@@ -138,8 +138,8 @@ public class enemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             gamemanager.instance.updateGameGoal(-1, XP);
-            gamemanager.instance.updateCurrency(XP); 
-            Destroy(gameObject); 
+            gamemanager.instance.updateCurrency(XP);
+            Destroy(gameObject);
         }
     }
     IEnumerator flashRed()
@@ -156,7 +156,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void faceTarget()
     {
 
-        Quaternion rot = Quaternion.LookRotation(new Vector3 (playerDir.x, transform.position.y, playerDir.z));
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, transform.position.y, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 }

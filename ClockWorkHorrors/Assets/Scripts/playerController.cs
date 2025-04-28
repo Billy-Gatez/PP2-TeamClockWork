@@ -8,7 +8,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
 
-    
+
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpSpeed;
@@ -18,11 +18,6 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
-
-    [SerializeField] float crouchHeight = 0.5f; 
-    [SerializeField] float normalHeight = 1.0f; 
-    [SerializeField] float crouchSpeed = 2.0f; 
-    bool isCrouching = false;
 
 
     int jumpCount;
@@ -41,9 +36,9 @@ public class playerController : MonoBehaviour, IDamage
     void Start()
     {
         HPOrig = HP;
-        controller.height = normalHeight;
+       
         updatePlayerUI();
-        
+
     }
 
 
@@ -55,7 +50,7 @@ public class playerController : MonoBehaviour, IDamage
 
         sprint();
 
-        crouch();
+        
 
     }
 
@@ -67,9 +62,11 @@ public class playerController : MonoBehaviour, IDamage
             playerVel = Vector3.zero;
         }
 
-        // Use Input.GetAxis for both keyboard and controller
         moveDir = (Input.GetAxis("Horizontal") * transform.right) +
-                   (Input.GetAxis("Vertical") * transform.forward);
+                 (Input.GetAxis("Vertical") * transform.forward);
+
+
+        //transform.position += moveDir * speed * Time.deltaTime;
 
         controller.Move(moveDir * speed * Time.deltaTime);
 
@@ -80,7 +77,6 @@ public class playerController : MonoBehaviour, IDamage
 
         shootTimer += Time.deltaTime;
 
-        // Use Input.GetButton for controller input
         if (Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
             shoot();
@@ -89,17 +85,14 @@ public class playerController : MonoBehaviour, IDamage
 
     void jump()
     {
-        // Use Input.GetButtonDown for controller input
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
     }
-
     void sprint()
     {
-        // Use Input.GetButtonDown and Input.GetButtonUp for controller input
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
@@ -110,20 +103,7 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-    void crouch()
-    {
-        // Use Input.GetButtonDown and Input.GetButtonUp for controller input
-        if (Input.GetButtonDown("Crouch") && !isCrouching)
-        {
-            isCrouching = true;
-            controller.height = crouchHeight;
-        }
-        else if (Input.GetButtonUp("Crouch") && isCrouching)
-        {
-            isCrouching = false;
-            controller.height = normalHeight;
-        }
-    }
+    
 
     void shoot()
     {
@@ -152,7 +132,7 @@ public class playerController : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            
+
             gamemanager.instance.youLose();
         }
     }

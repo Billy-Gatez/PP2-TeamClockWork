@@ -1,7 +1,7 @@
 //Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
 
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 using TMPro;
 
 public class gamemanager : MonoBehaviour
@@ -17,7 +17,7 @@ public class gamemanager : MonoBehaviour
 
     public Image playerHPBar;
     public GameObject playerDamageScreen;
-    
+
 
     public GameObject player;
     public playerController playerScript;
@@ -29,9 +29,9 @@ public class gamemanager : MonoBehaviour
 
     int gameGoalCount;
     public int currency;
-    
 
-    
+
+
     void Awake()
     {
         instance = this;
@@ -89,7 +89,7 @@ public class gamemanager : MonoBehaviour
 
         if (gameGoalCount <= 0)
         {
-            
+
             statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);
@@ -102,8 +102,8 @@ public class gamemanager : MonoBehaviour
 
         if (currency < 0)
         {
-            currency = 0; 
-            xpText.text = " " + currency.ToString("F0");
+            currency = 0;
+            xpText.text = "XP: " + currency.ToString("F0");
         }
     }
 
