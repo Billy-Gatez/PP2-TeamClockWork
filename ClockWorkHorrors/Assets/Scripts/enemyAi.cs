@@ -9,105 +9,148 @@ public class enemyAI : MonoBehaviour, IDamage
 
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Transform headPos;
 
 
     public int XP;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
 
+    [SerializeField] int FOV;
+    [SerializeField] int roamDist;
+    [SerializeField] int roamPauseTime;
+    [SerializeField] int shootFOV;
+
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
-    [SerializeField] int numberOfPatrolPoints = 5; // Number of patrol points to generate
-    [SerializeField] float patrolAreaSize = 20f; // Size of the patrol area (20x20)
-    private Vector3[] patrolPoints; // Array to hold patrol points
-    private int currentPatrolIndex = 0; // Current patrol point index
-    [SerializeField] float patrolSpeed = 2f; // Speed for patrolling
-    [SerializeField] float detectionRange = 10f; // Range to detect the player
+    [SerializeField] int numberOfPatrolPoints = 5; 
+    [SerializeField] float patrolAreaSize = 20f; 
+    private Vector3[] patrolPoints; 
+    private int currentPatrolIndex = 0; 
+    [SerializeField] float patrolSpeed = 2f; 
+    [SerializeField] float detectionRange = 10f; 
 
     bool playerInRange;
 
     float shootTimer;
+    float roamTimer;
+    float angleToPlayer;
+    float stoppingDistOrig;
 
 
     Color colorOrig;
 
     Vector3 playerDir;
+    Vector3 startingPos;
 
 
     void Start()
     {
         colorOrig = model.material.color;
         gamemanager.instance.updateGameGoal(1, 0);
-        agent.speed = patrolSpeed; // Set the agent speed for patrolling
+        agent.speed = patrolSpeed; 
+        startingPos = transform.position;
+        stoppingDistOrig = agent.stoppingDistance;
 
-
-        // Generate patrol points within a 20x20 area
+        
         GeneratePatrolPoints();
     }
     void Update()
     {
+       
         if (playerInRange)
         {
+         
             playerDir = (gamemanager.instance.player.transform.position - transform.position);
             agent.SetDestination(gamemanager.instance.player.transform.position);
 
+          
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
                 faceTarget();
             }
 
             shootTimer += Time.deltaTime;
-
             if (shootTimer >= shootRate)
             {
                 shoot();
             }
+
+        
+            if (!canSeePlayer())
+            {
+                checkRoam();
+            }
         }
         else
         {
+           
             Patrol();
+
+            
+            if (agent.remainingDistance < 0.01f)
+            {
+                roamTimer += Time.deltaTime;
+                checkRoam();
+            }
         }
     }
 
-    void GeneratePatrolPoints()
+    void checkRoam()
     {
-        patrolPoints = new Vector3[numberOfPatrolPoints];
-
-        for (int i = 0; i < numberOfPatrolPoints; i++)
+        if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
         {
-            // Generate random patrol points within the specified area
-            float x = Random.Range(-patrolAreaSize / 2, patrolAreaSize / 2);
-            float z = Random.Range(-patrolAreaSize / 2, patrolAreaSize / 2);
-            patrolPoints[i] = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
+            roam();
         }
     }
-    void Patrol()
+
+    void roam()
     {
-        // Check if there are any patrol points assigned
-        if (patrolPoints.Length == 0)
-        {
+        roamTimer = 0;
+        agent.stoppingDistance = 0;
 
-            return; // Exit the method if there are no patrol points
+        Vector3 ranPos = Random.insideUnitSphere * roamDist;
+        ranPos += startingPos;
+
+        NavMeshHit hit;
+        NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
+        agent.SetDestination(hit.position);
+    }
+
+    bool canSeePlayer()
+    {
+        playerDir = (gamemanager.instance.player.transform.position - headPos.position);
+        angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
+        Debug.DrawRay(headPos.position, playerDir);
+
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        {
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= FOV)
+            {
+                agent.SetDestination(gamemanager.instance.player.transform.position);
+
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    faceTarget();
+                }
+
+                shootTimer += Time.deltaTime;
+
+                if (angleToPlayer <= shootFOV && shootTimer >= shootRate)
+                {
+                    shoot();
+                }
+
+                agent.stoppingDistance = stoppingDistOrig;
+                return true;
+            }
         }
 
-        // Move towards the current patrol point
-        Vector3 targetPosition = patrolPoints[currentPatrolIndex];
-
-        // Check if we have reached the patrol point
-        if (agent.remainingDistance <= agent.stoppingDistance)
-        {
-            // Move to the next patrol point
-            currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-        }
-
-        // Check distance to player to see if they should engage
-        float distanceToPlayer = Vector3.Distance(transform.position, gamemanager.instance.player.transform.position);
-        if (distanceToPlayer <= detectionRange)
-        {
-            playerInRange = true; // Engage player if within range
-        }
+        agent.stoppingDistance = 0;
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -123,9 +166,50 @@ public class enemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            agent.stoppingDistance = 0;
+        }
+    }
+
+    void GeneratePatrolPoints()
+    {
+        patrolPoints = new Vector3[numberOfPatrolPoints];
+
+        for (int i = 0; i < numberOfPatrolPoints; i++)
+        {
+            
+            float x = Random.Range(-patrolAreaSize / 2, patrolAreaSize / 2);
+            float z = Random.Range(-patrolAreaSize / 2, patrolAreaSize / 2);
+            patrolPoints[i] = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
+        }
+    }
+    void Patrol()
+    {
+    
+        if (patrolPoints.Length == 0)
+        {
+
+            return; 
         }
 
+        
+        Vector3 targetPosition = patrolPoints[currentPatrolIndex];
+
+       
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+           
+            currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+        }
+
+       
+        float distanceToPlayer = Vector3.Distance(transform.position, gamemanager.instance.player.transform.position);
+        if (distanceToPlayer <= detectionRange)
+        {
+            playerInRange = true; 
+        }
     }
+
+
 
 
     public void takeDamage(int amount)
