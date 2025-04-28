@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, IPickup
 {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
@@ -160,16 +160,11 @@ public class playerController : MonoBehaviour, IDamage
     }
     public void getGunStats(gunStats gun)
     {
-        gunList.Add(gun);
-        gunListPos = gunList.Count - 1;
-
-        
-        GameObject gunInstance = Instantiate(gun.model, transform.Find("GunHolder").position, transform.Find("GunHolder").rotation);
-        gunInstance.transform.SetParent(transform.Find("GunHolder"));
-
-        changeGun();
+        shootDamage = gun.shootDamage;
+        shootDist = gun.shootDistance;
+        shootRate = gun.shootRate;
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
     }
-
     void selectGun()
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
