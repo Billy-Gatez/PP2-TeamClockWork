@@ -163,6 +163,10 @@ public class playerController : MonoBehaviour, IDamage
         gunList.Add(gun);
         gunListPos = gunList.Count - 1;
 
+        
+        GameObject gunInstance = Instantiate(gun.model, transform.Find("GunHolder").position, transform.Find("GunHolder").rotation);
+        gunInstance.transform.SetParent(transform.Find("GunHolder"));
+
         changeGun();
     }
 
@@ -182,12 +186,20 @@ public class playerController : MonoBehaviour, IDamage
 
     void changeGun()
     {
+      
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDistance;
-        shootRate = (int)gunList[gunListPos].shootRate;
+        shootRate = gunList[gunListPos].shootRate;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].model.GetComponent<MeshRenderer>().sharedMaterial;
+  
+        if (gunModel != null)
+        {
+            Destroy(gunModel);
+        }
+
+       
+        gunModel = Instantiate(gunList[gunListPos].model, transform.Find("GunHolder").position, transform.Find("GunHolder").rotation);
+        gunModel.transform.SetParent(transform.Find("GunHolder"));
 
         updatePlayerUI();
     }
