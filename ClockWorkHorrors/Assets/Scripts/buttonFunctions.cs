@@ -20,6 +20,17 @@ public class buttonFunctions : MonoBehaviour
         gamemanager.instance.stateUnpause();
     }
 
+    public void changeScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void respawn()
+    {
+        gamemanager.instance.playerScript.spawnPlayer();
+        gamemanager.instance.stateUnpause();
+    }
+
     public void quit()
     {
 #if UNITY_EDITOR

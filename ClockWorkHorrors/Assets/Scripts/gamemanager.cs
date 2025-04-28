@@ -17,7 +17,8 @@ public class gamemanager : MonoBehaviour
 
     public Image playerHPBar;
     public GameObject playerDamageScreen;
-
+    public GameObject playerSpawnPos;
+    public GameObject checkpointPopup;
 
     public GameObject player;
     public playerController playerScript;
@@ -37,6 +38,7 @@ public class gamemanager : MonoBehaviour
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn POS");
 
         timeScaleOrig = Time.timeScale;
     }

@@ -20,8 +20,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
-
-
+    [SerializeField] public GameObject bullet;
+    [SerializeField] Transform shootPos;
     int jumpCount;
     public int HPOrig;
     public int HP;
@@ -39,7 +39,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     void Start()
     {
         HPOrig = HP;
-       
+
         updatePlayerUI();
 
     }
@@ -53,7 +53,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
         sprint();
 
-        
+
 
     }
 
@@ -114,11 +114,12 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         }
     }
 
-    
+
 
     void shoot()
     {
         shootTimer = 0;
+        Instantiate(bullet, shootPos.position, transform.rotation);
 
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
@@ -181,18 +182,18 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     void changeGun()
     {
-      
+
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDistance;
         shootRate = gunList[gunListPos].shootRate;
 
-  
+
         if (gunModel != null)
         {
             Destroy(gunModel);
         }
 
-       
+
         gunModel = Instantiate(gunList[gunListPos].model, transform.Find("GunHolder").position, transform.Find("GunHolder").rotation);
         gunModel.transform.SetParent(transform.Find("GunHolder"));
 
@@ -206,5 +207,13 @@ public class playerController : MonoBehaviour, IDamage, IPickup
             gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
             updatePlayerUI();
         }
+    }
+
+    public void spawnPlayer()
+    {
+        controller.transform.position = gamemanager.instance.playerSpawnPos.transform.position;
+
+        HP = HPOrig;
+        updatePlayerUI();
     }
 }
