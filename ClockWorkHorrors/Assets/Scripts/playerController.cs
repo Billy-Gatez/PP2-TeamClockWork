@@ -152,23 +152,46 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     void shoot()
     {
         shootTimer = 0;
-        //gunList[gunListPos].ammoCur++;
-        updatePlayerUI();
-        aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVolume);
+
+        
+        if (gunList.Count == 0)
+        {
+            Debug.LogWarning("No guns available to shoot.");
+            return;
+        }
+
+        if (gunListPos < 0 || gunListPos >= gunList.Count)
+        {
+            Debug.LogError($"Invalid gunListPos: {gunListPos}. Resetting to 0.");
+            gunListPos = 0; 
+        }
+
+       
+        if (gunList[gunListPos].shootSound != null && gunList[gunListPos].shootSound.Length > 0)
+        {
+           
+            aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVolume);
+        }
+        else
+        {
+            Debug.LogWarning("No shooting sounds available for this gun.");
+        }
+
+        
         Instantiate(bullet, shootPos.position, transform.rotation);
+
        
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
         {
             Debug.Log(hit.collider.name);
 
+            
             IDamage dmg = hit.collider.GetComponent<IDamage>();
-
             if (dmg != null)
             {
                 dmg.takeDamage(shootDamage);
             }
-
         }
     }
 
@@ -228,38 +251,60 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     }
     void selectGun()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
+        
+        if (gunList.Count == 0)
+        {
+            return; //
+        }
+
+      
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             gunListPos++;
+            if (gunListPos >= gunList.Count)
+            {
+                gunListPos = 0; 
+            }
             changeGun();
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+      
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             gunListPos--;
+            if (gunListPos < 0)
+            {
+                gunListPos = gunList.Count - 1; 
+            }
             changeGun();
         }
     }
 
     void changeGun()
     {
+      
+        if (gunList.Count == 0)
+        {
+            return; 
+        }
 
+       
         shootDamage = gunList[gunListPos].shootDamage;
         shootDist = gunList[gunListPos].shootDistance;
         shootRate = gunList[gunListPos].shootRate;
 
-
+        
         if (gunModel != null)
         {
             Destroy(gunModel);
         }
 
-
+      
         gunModel = Instantiate(gunList[gunListPos].model, transform.Find("GunHolder").position, transform.Find("GunHolder").rotation);
         gunModel.transform.SetParent(transform.Find("GunHolder"));
 
+     
         updatePlayerUI();
     }
-
     void reload()
     {
         if (Input.GetButtonDown("Reload") && gunList.Count > 0)
