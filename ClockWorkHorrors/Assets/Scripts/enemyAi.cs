@@ -4,28 +4,32 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
+    [Header("----- Components -----")]
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Animator anim;
     [SerializeField] Transform headPos;
 
+    [Header("----- Stats -----")]
     [SerializeField] int XP;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
+    [SerializeField] int animTranSpeed;
 
+    [Header("----- Weapons -----")]
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] int shootFOV;
     [SerializeField] float shootRate;
-
+    [SerializeField] Collider swordCol;
     [SerializeField] GameObject meleeHitbox;
     [SerializeField] float meleeCooldown;
     [SerializeField] float meleeRange;
 
     bool playerInRange;
-
     float shootTimer;
     float meleeTimer;
     float roamTimer;
@@ -33,20 +37,21 @@ public class enemyAI : MonoBehaviour, IDamage
     float stoppingDistOrig;
 
     Color colorOrig;
-
     Vector3 playerDir;
     Vector3 startingPos;
 
     void Start()
     {
         colorOrig = model.material.color;
-        gamemanager.instance.updateGameGoal(1, 0);
+        // gamemanager.instance.updateGameGoal(1, 0); // Left just in case
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
     }
 
     void Update()
     {
+        setAnimLocomotion();
+
         if (agent.remainingDistance < 0.01f)
             roamTimer += Time.deltaTime;
 
@@ -58,6 +63,13 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             checkRoam();
         }
+    }
+
+    void setAnimLocomotion()
+    {
+        float agentSpeedCur = agent.velocity.normalized.magnitude;
+        float animSpeedCur = anim.GetFloat("Speed");
+        anim.SetFloat("Speed", Mathf.Lerp(animSpeedCur, agentSpeedCur, Time.deltaTime * animTranSpeed));
     }
 
     void checkRoam()
@@ -82,7 +94,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     bool canSeePlayer()
     {
-        playerDir = (gamemanager.instance.player.transform.position - headPos.position);
+        playerDir = gamemanager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
         Debug.DrawRay(headPos.position, playerDir);
 
@@ -94,9 +106,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 agent.SetDestination(gamemanager.instance.player.transform.position);
 
                 if (agent.remainingDistance <= agent.stoppingDistance)
-                {
                     faceTarget();
-                }
 
                 shootTimer += Time.deltaTime;
                 meleeTimer += Time.deltaTime;
@@ -121,21 +131,38 @@ public class enemyAI : MonoBehaviour, IDamage
         return false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    void faceTarget()
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-        }
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0f, playerDir.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
-    private void OnTriggerExit(Collider other)
+    void shoot()
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-            agent.stoppingDistance = 0;
-        }
+        shootTimer = 0;
+        anim.SetTrigger("Shoot");
+    }
+
+    public void createBullet()
+    {
+        Instantiate(bullet, shootPos.position, transform.rotation);
+    }
+
+    void meleeAttack()
+    {
+        meleeTimer = 0;
+        meleeHitbox.SetActive(true);
+        // Trigger a melee animation here
+    }
+
+    public void swordColOn()
+    {
+        swordCol.enabled = true;
+    }
+
+    public void swordColOff()
+    {
+        swordCol.enabled = false;
     }
 
     public void takeDamage(int amount)
@@ -159,22 +186,20 @@ public class enemyAI : MonoBehaviour, IDamage
         model.material.color = colorOrig;
     }
 
-    void shoot()
+    private void OnTriggerEnter(Collider other)
     {
-        shootTimer = 0;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        if (other.CompareTag("Player"))
+            playerInRange = true;
     }
 
-    void meleeAttack()
+    private void OnTriggerExit(Collider other)
     {
-        meleeTimer = 0;
-        meleeHitbox.SetActive(true);
-    }
-
-    void faceTarget()
-    {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0f, playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            agent.stoppingDistance = 0;
+        }
     }
 }
+
 
