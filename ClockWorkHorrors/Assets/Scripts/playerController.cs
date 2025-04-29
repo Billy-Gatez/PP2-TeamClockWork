@@ -19,9 +19,19 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     [SerializeField] GameObject gunModel;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
+    [SerializeField] AudioSource aud;
     [SerializeField] float shootRate;
     [SerializeField] public GameObject bullet;
     [SerializeField] Transform shootPos;
+
+
+    [SerializeField] AudioClip[] audJump;
+    [Range (0, 1)][SerializeField] float audJumpVol;
+    [SerializeField] AudioClip[] audHurt;
+    [Range(0, 1)][SerializeField] float audHurtVol;
+    [SerializeField] AudioClip[] audSteps;
+    [Range(0, 1)][SerializeField] float audStepsVol;
+
     int jumpCount;
     public int HPOrig;
     public int HP;
@@ -32,7 +42,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     Vector3 moveDir;
     Vector3 playerVel;
-
+    bool isPlayingStep;
     bool isSprinting;
 
 
@@ -54,14 +64,17 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         sprint();
 
 
-
     }
 
     void movement()
     {
         if (controller.isGrounded)
         {
-            jumpCount = 0;
+            if (moveDir.normalized.magnitude > 0.3f && !isPlayingStep)
+            {
+                StartCoroutine(playStep());
+            }
+                jumpCount = 0;
             playerVel = Vector3.zero;
         }
 
@@ -98,19 +111,39 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     {
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
+            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
     }
-    void sprint()
+
+    IEnumerator playStep()
+    {
+
+        isPlayingStep = true;
+        aud.PlayOneShot(audSteps[Random.Range(0, audSteps.Length)], audStepsVol);
+
+        if (isSprinting)
+
+            yield return new WaitForSeconds(0.3f);
+
+        else
+
+            yield return new WaitForSeconds(0.5f);
+
+        isPlayingStep = false;
+    }
+        void sprint()
     {
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
+            isSprinting = true;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMod;
+            isSprinting = false;
         }
     }
 
@@ -119,8 +152,11 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     void shoot()
     {
         shootTimer = 0;
+        //gunList[gunListPos].ammoCur++;
+        updatePlayerUI();
+        aud.PlayOneShot(gunList[gunListPos].shootSound[Random.Range(0, gunList[gunListPos].shootSound.Length)], gunList[gunListPos].shootSoundVolume);
         Instantiate(bullet, shootPos.position, transform.rotation);
-
+       
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
         {
@@ -139,6 +175,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public void takeDamage(int amount)
     {
         HP -= amount;
+        aud.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)], audHurtVol);
         updatePlayerUI();
         StartCoroutine(flashDamageScreen());
 
@@ -161,10 +198,33 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     }
     public void getGunStats(gunStats gun)
     {
+
+
+        gunList.Add(gun);
+
+
+        if (gunList.Count == 1)
+        {
+            gunListPos = 0;
+        }
+
         shootDamage = gun.shootDamage;
         shootDist = gun.shootDistance;
         shootRate = gun.shootRate;
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Gun"))
+        {
+            gunStats gun = other.GetComponent<gunStats>();
+            if (gun != null)
+            {
+                getGunStats(gun); 
+                Destroy(other.gameObject); 
+            }
+        }
     }
     void selectGun()
     {

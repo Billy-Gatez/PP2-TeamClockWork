@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Pistol Stats
   m_EditorClassIdentifier: 
   model: {fileID: 5571641588984482722, guid: c303a18f1cbdd4156b139b9e5b35d6a9, type: 3}
-  shootDamage: 2
+  shootDamage: 1
   shootDistance: 87
   shootRate: 1.02
   ammoCur: 0
   ammoMax: 50
-  bullet: {fileID: 5651609531893626737, guid: 72acfd549f87230409de1ab359401db9, type: 3}
+  bullet: {fileID: 8683749417629670098, guid: be295befa5ffdad468766aa3822cf45a, type: 3}
   hitEffect: {fileID: 0}
-  shootSound: []
-  shootSoundVolume: 0.32
+  shootSound:
+  - {fileID: 8300000, guid: 3335486efdfb06949bb93e62710d0131, type: 3}
+  shootSoundVolume: 0.46
