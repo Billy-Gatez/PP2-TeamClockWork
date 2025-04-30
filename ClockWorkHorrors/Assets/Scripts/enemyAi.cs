@@ -29,12 +29,27 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] float meleeCooldown;
     [SerializeField] float meleeRange;
 
+    [Header("----- Audio -----")]
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] audSteps;
+    [Range(0, 1)][SerializeField] float audStepsVol;
+    [SerializeField] AudioClip[] audHurt;
+    [Range(0, 1)][SerializeField] float audHurtVol;
+    [SerializeField] AudioClip[] audDeath;
+    [Range(0, 1)][SerializeField] float audDeathVol;
+    [SerializeField] AudioClip[] audShoot;
+    [Range(0, 1)][SerializeField] float audShootVol;
+    [SerializeField] AudioClip[] audMelee;
+    [Range(0, 1)][SerializeField] float audMeleeVol;
+
+
     bool playerInRange;
     float shootTimer;
     float meleeTimer;
     float roamTimer;
     float angleToPlayer;
     float stoppingDistOrig;
+    bool isPlayingStep;
 
     Color colorOrig;
     Vector3 playerDir;
@@ -51,6 +66,11 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         setAnimLocomotion();
+
+        if (agent.velocity.magnitude > 0.1f && !isPlayingStep && agent.remainingDistance > agent.stoppingDistance)
+        {
+            StartCoroutine(playStep());
+        }
 
         if (agent.remainingDistance < 0.01f)
             roamTimer += Time.deltaTime;
@@ -78,6 +98,14 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             roam();
         }
+    }
+
+    IEnumerator playStep()
+    {
+        isPlayingStep = true;
+        aud.PlayOneShot(audSteps[Random.Range(0, audSteps.Length)], audStepsVol);
+        yield return new WaitForSeconds(0.5f);
+        isPlayingStep = false;
     }
 
     void roam()
@@ -140,6 +168,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
+        aud.PlayOneShot(audShoot[Random.Range(0, audShoot.Length)], audShootVol);
         anim.SetTrigger("Shoot");
     }
 
@@ -152,6 +181,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         meleeTimer = 0;
         meleeHitbox.SetActive(true);
+        aud.PlayOneShot(audMelee[Random.Range(0, audMelee.Length)], audMeleeVol);
         // Trigger a melee animation here
     }
 
@@ -168,12 +198,14 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        aud.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)], audHurtVol);
         StartCoroutine(flashred());
 
         agent.SetDestination(gamemanager.instance.player.transform.position);
 
         if (HP <= 0)
         {
+            aud.PlayOneShot(audDeath[Random.Range(0, audDeath.Length)], audDeathVol);
             gamemanager.instance.updateGameGoal(-1, XP);
             Destroy(gameObject);
         }

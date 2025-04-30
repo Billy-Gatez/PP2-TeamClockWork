@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\CLOCKWORK\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\damage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClockWorkHorrors\\Assets\\Scripts\\damage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -14,21 +18,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "damage.cs",
+              "DocumentMoniker": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\damage.cs",
+              "RelativeDocumentMoniker": "ClockWorkHorrors\\Assets\\Scripts\\damage.cs",
+              "ToolTip": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\damage.cs",
+              "RelativeToolTip": "ClockWorkHorrors\\Assets\\Scripts\\damage.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAmwH4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-25T18:40:58.27Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "enemyAi.cs",
               "DocumentMoniker": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs",
               "RelativeDocumentMoniker": "ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs",
               "ToolTip": "D:\\CLOCKWORK\\ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs",
               "RelativeToolTip": "ClockWorkHorrors\\Assets\\Scripts\\enemyAi.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-24T21:14:43.599Z",
               "EditorCaption": ""
