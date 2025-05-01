@@ -1,4 +1,4 @@
-//Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
+//Mark Bennett - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
 
 using System.ComponentModel;
 using UnityEngine;

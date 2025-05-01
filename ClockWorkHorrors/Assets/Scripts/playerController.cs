@@ -1,4 +1,4 @@
-//Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
+//Mark Bennett - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
 
 using UnityEngine;
 using System.Collections;
@@ -21,7 +21,8 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
 
-
+    public int currentAmmo;
+    public int maxAmmo;
     int jumpCount;
     public int HPOrig;
     public int HP;
@@ -211,5 +212,15 @@ public class playerController : MonoBehaviour, IDamage
             gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
             updatePlayerUI();
         }
+    }
+
+    public void AddAmmo(int amount)
+    {
+        currentAmmo += amount;
+        if (currentAmmo > maxAmmo)
+        {
+            currentAmmo = maxAmmo; 
+        }
+        //UpdateAmmoUI(); 
     }
 }
