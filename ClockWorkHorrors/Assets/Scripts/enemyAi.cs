@@ -1,4 +1,4 @@
-//Mark Bennett 04/2025 & Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye - Enemy AI -
+//Mark Bennett 04/2025 & Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye - Enemy AI
 
 using UnityEngine;
 using System.Collections;
