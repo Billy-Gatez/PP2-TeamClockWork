@@ -1,3 +1,4 @@
+// Jeremy Cahill
 using UnityEngine;
 using System.Collections;
 
