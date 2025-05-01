@@ -1,7 +1,7 @@
-//Jeremy Cahill - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
+//Mark Bennett - Full Sail University - Portfolio 2 - Game Dev - Rod Moye
 
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 using TMPro;
 
 public class gamemanager : MonoBehaviour
@@ -12,10 +12,10 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] TMP_Text gameGoalCountText;
-    [SerializeField] TMP_Text xpText;
+    //[SerializeField] TMP_Text gameGoalCountText;
+    //[SerializeField] TMP_Text xpText;
 
-    public Image playerHPBar;
+    //public Image playerHPBar;
     public GameObject playerDamageScreen;
 
 
@@ -84,7 +84,7 @@ public class gamemanager : MonoBehaviour
     public void updateGameGoal(int amount, int cur)
     {
         gameGoalCount += amount;
-        gameGoalCountText.text = gameGoalCount.ToString("F0");
+        //gameGoalCountText.text = gameGoalCount.ToString("F0");
         currency += cur;
 
         if (gameGoalCount <= 0)
@@ -98,12 +98,12 @@ public class gamemanager : MonoBehaviour
     public void updateCurrency(int amount)
     {
         currency += amount;
-        xpText.text = " " + currency.ToString("F0");
+       //xpText.text = " " + currency.ToString("F0");
 
         if (currency < 0)
         {
             currency = 0;
-            xpText.text = "XP: " + currency.ToString("F0");
+            //xpText.text = "XP: " + currency.ToString("F0");
         }
     }
 
