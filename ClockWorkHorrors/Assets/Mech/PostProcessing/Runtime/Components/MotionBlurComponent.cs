@@ -340,6 +340,7 @@ namespace UnityEngine.PostProcessing
 
         bool m_FirstFrame = true;
 
+        [System.Obsolete]
         public override bool active
         {
             get

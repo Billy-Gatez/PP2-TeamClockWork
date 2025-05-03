@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 
 public class gamemanager : MonoBehaviour
@@ -102,5 +103,8 @@ public class gamemanager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    
+    internal void youlose()
+    {
+        throw new NotImplementedException();
+    }
 }
