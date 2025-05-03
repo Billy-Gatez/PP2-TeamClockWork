@@ -7,23 +7,40 @@ public class buttonFunctions : MonoBehaviour
     {
         gamemanager.instance.stateUnpause();
     }
-
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gamemanager.instance.stateUnpause();
-
+    }
+    public void quit()
+    {
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false ;
+    #else
+        Application.Quit();
+    #endif
     }
 
-    public void quit()
-
+    public void respawn()
     {
+        gamemanager.instance.playerScript.spawnPlayer();
+        gamemanager.instance.stateUnpause();
+    }
 
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+    public void exitShop()
+    {
+        shopKeeper.instance.ExitShop();
+    }
+    public void increaseHP(int cost)
+    {
+        if (gamemanager.instance.currency >= cost)
+        {
 
+        //gamemanager.instance.playerScript.HP += 1;
+        gamemanager.instance.currency -= cost;
+        gamemanager.instance.playerScript.PickupHealthItem(1);
+        gamemanager.instance.updateCurrencyText();
+        gamemanager.instance.playerScript.updatePlayerUI();
+        }
     }
 }

@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public interface IPickup
+public interface Ipickup
 {
     public void getGunStats(gunStats gun);
+
+
+    void PickupHealthItem(int healthAmount);
 
 }
